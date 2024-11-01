@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<head>
+  <title>Insert Silverlight Gallery</title>
+  <script type="text/javascript" src="../../../wp-includes/js/tinymce/tiny_mce_popup.js"></script>
+  <script type="text/javascript">
+	var slGalleryPP = {
+		init : function() {
+		},
+		insert : function() {
+			// Insert the contents from the input into the document
+			var embedCode = '[sl-gallery:';
+			var first = true;
+			
+			if (document.forms[0].slGalleryWidth.value) {
+				embedCode += 'width='+document.forms[0].slGalleryWidth.value;
+				first = false;
+			}
+			
+			if (document.forms[0].slGalleryHeight.value) {	
+				(!first)?embedCode+=', ':first=false;
+				embedCode += 'height='+document.forms[0].slGalleryHeight.value; 
+			}
+					
+			(!first)?embedCode+=', ':first=false;
+			embedCode += 'leftArrow='+String(document.forms[0].slGalleryLeftArrow.checked);
+			
+			(!first)?embedCode+=', ':first=false;
+			embedCode += 'rightArrow='+String(document.forms[0].slGalleryRightArrow.checked);
+			
+			(!first)?embedCode+=', ':first=false;
+			embedCode += 'pageNumbers='+String(document.forms[0].slGalleryPageNumbers.checked);
+			
+			(!first)?embedCode+=', ':first=false;
+			embedCode += 'thumbnails='+String(document.forms[0].slGalleryThumbnails.checked);
+			
+			(!first)?embedCode+=', ':first=false;
+			embedCode += 'preloader='+String(document.forms[0].slGalleryPreloader.checked);
+			
+			(!first)?embedCode+=', ':first=false;
+			embedCode += 'fill='+document.forms[0].slGalleryFill.value; 
+			
+			if (document.forms[0].slGalleryBgColor.value) {	
+				(!first)?embedCode+=', ':first=false;
+				embedCode += 'bgcolor='+document.forms[0].slGalleryBgColor.value; 
+			}
+			
+			(!first)?embedCode+=', ':first=false;
+			embedCode += 'bgmode='+document.forms[0].slGalleryBgMode.value;
+			
+			embedCode += ']';
+			tinyMCEPopup.editor.execCommand('mceInsertRawHTML', false, embedCode);
+			tinyMCEPopup.close();
+		}
+	};
+	tinyMCEPopup.onInit.add(slGalleryPP.init, slGalleryPP);
+  </script>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+<!--
+body,td,th {
+	font-family: Georgia, Times New Roman, Times, serif;
+	font-size: 12px;
+}
+-->
+</style>
+</head>
+<body>
+<form onsubmit="slGalleryPP.insert();return false;" action="#">
+  <br />
+  <h3>Gallery Dimensions</h3>
+  <em>(if not defined default settings apply)</em><br />
+  <p style="line-height:2em">
+  	Width <input id="slGalleryWidth" name="slGalleryWidth" type="text" class="text" size="5" value="" /><br />
+  	Height <input id="slGalleryHeight" name="slGalleryHeight" type="text" class="text" size="5" value="" /><br />
+	Display left arrow <input id="slGalleryLeftArrow" name="slGalleryLeftArrow" type="checkbox" checked="checked" /><br />
+	Display right arrow <input id="slGalleryRightArrow" name="slGalleryRightArrow" type="checkbox" checked="checked" /><br />
+	Display page numbers <input id="slGalleryPageNumbers" name="slGalleryPageNumbers" type="checkbox" /><br />
+	Display thumbnails <input id="slGalleryThumbnails" name="slGalleryThumbnails" type="checkbox" /><br />
+	Display preloader <input id="slGalleryPreloader" name="slGalleryPreloader" type="checkbox" /><br />
+	Fill mode <select id="slGalleryFill" name="slGalleryFill"><option value="uniformtofill">Uniform to fill</option><option value="uniform">Uniform</option></select><br />
+	Background mode <select id="slGalleryBgMode" name="slGalleryBgMode" onchange="javascript:if (document.getElementById('slGalleryBgMode').value == 'transparent') document.getElementById('slGalleryBgColor').value = 'transparent';return 0;"><option value="opaque">Opaque</option><option value="transparent">Transparent</option></select><br />
+	Background color <input id="slGalleryBgColor" name="slGalleryBgColor" type="text" class="text" size="10" value=""/><br />
+  </p>
+  <input type="button" id="insert" name="insert" value="{#insert}" onClick="slGalleryPP.insert();"  />
+</form>
+</body>
+</html>
